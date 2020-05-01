@@ -1,0 +1,1 @@
+CREATE SCHEMA IF NOT EXISTS Freedom COLLATE utf8mb4_general_ci;

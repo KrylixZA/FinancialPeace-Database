@@ -1,0 +1,35 @@
+trigger:
+  branches:
+    include:
+    - '*'
+  paths:
+    include:
+    - '*'
+
+pool:
+  vmImage: 'windows-2019'
+
+variables:
+  buildConfiguration: 'Release'
+  nugetFeedName: 'headleysj'
+  nugetFeedSource: 'https://pkgs.dev.azure.com/headleysj/_packaging/headleysj/nuget/v3/index.json'
+  nugetFeedUser: 'AzureNugetUser'
+
+jobs:
+- job: 'Build'
+  steps:
+  - task: PowerShell@2
+    displayName: 'Build'
+    inputs:
+      targetType: 'filePath'
+      filePath: 'build-bootstrapper.ps1'
+      arguments: '-Actions "build" -BuildId $(Build.BuildID) -BranchName $(Build.SourceBranchName) -BuildConfiguration $(buildConfiguration) -NugetFeedName $(nugetFeedName) -NugetFeedSource $(nugetFeedSource) -NugetFeedUser $(nugetFeedUser) -NugetAccessToken $(System.AccessToken)'
+      failOnStdErr: true
+
+  - task: PowerShell@2
+    displayName: 'Publish packages to nuget feed'
+    inputs:
+      targetType: 'filePath'
+      filePath: 'nuget-publish.ps1'
+      arguments: '-NugetFeedName $(nugetFeedName) -NugetFeedSource $(nugetFeedSource) -NugetFeedUser $(nugetFeedUser) -NugetAccessToken $(System.AccessToken)'
+      failOnStdErr: true

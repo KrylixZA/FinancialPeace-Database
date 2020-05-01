@@ -1,0 +1,22 @@
+DELIMITER //
+
+CREATE OR REPLACE PROCEDURE pr_UpdateUser(IN $userId VARCHAR(36),
+                                          IN $username VARCHAR(255),
+                                          IN $email VARCHAR(255),
+                                          IN $password VARCHAR(255))
+BEGIN
+    IF ($username IS NOT NULL) THEN
+        CALL pr_UpdateUserUsername($userId, $username);
+    END IF;
+
+    IF ($email IS NOT NULL) THEN
+        CALL pr_UpdateUserEmail($userId, $email);
+    END IF;
+
+    IF ($password IS NOT NULL) THEN
+        CALL pr_UpdateUserPassword($userId, $password);
+    END IF;
+END
+//
+
+DELIMITER ;
