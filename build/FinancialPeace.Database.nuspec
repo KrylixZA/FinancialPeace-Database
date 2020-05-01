@@ -7,7 +7,7 @@
         <authors>Financial Peace</authors>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>The database to serve the Financial Peace project</description>
-        <repositoryUrl>https://dev.azure.com/headleysj/FinancialPeace/_git/FinancialPeace-Database</repositoryUrl>
+        <projectUrl>https://dev.azure.com/headleysj/FinancialPeace/_git/FinancialPeace-Database</projectUrl>
         <tags>Financial Peace Database</tags>
     </metadata>
     <files>
