@@ -16,7 +16,7 @@ Add-Type -Path "$(Split-Path -Parent $MyInvocation.MyCommand.Path)\MySQL.Data.dl
 Add-Type -Path "$(Split-Path -Parent $MyInvocation.MyCommand.Path)\Renci.SshNet.dll";
 
 # Get and execute table create scripts
-$tableScripts = (Get-ChildItem -Path $tablesDir -Include ("*.sql") -Recurse).FullName;
+$tableScripts = (Get-ChildItem -Path $tablesDir -Include ("*.sql") -Exclude ("*.PRESETS.sql") -Recurse).FullName;
 Write-Host $tableScripts;
 foreach ($tableScript in $tableScripts) {
     $command = New-Object MySql.Data.MySqlClient.MySqlCommand;
