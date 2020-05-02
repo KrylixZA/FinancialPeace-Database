@@ -1,8 +1,8 @@
 DELIMITER //
 
-CREATE OR REPLACE PROCEDURE pr_SubtractAmountToSavingsAccountForUser(IN $savingsAccountId VARCHAR(36),
-                                                                     IN $userId VARCHAR(36),
-                                                                     IN $amount DOUBLE)
+CREATE OR REPLACE PROCEDURE pr_SubtractAmountFromSavingsAccountForUser(IN $savingsAccountId VARCHAR(36),
+                                                                       IN $userId VARCHAR(36),
+                                                                       IN $amount DOUBLE)
 BEGIN
     SELECT CurrentSavingsValue
     INTO @currentSavingsValue
