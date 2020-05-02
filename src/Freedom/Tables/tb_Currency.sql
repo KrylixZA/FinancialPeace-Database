@@ -1,4 +1,4 @@
-CREATE TABLE tb_Currency
+CREATE TABLE IF NOT EXISTS tb_Currency
 (
     CurrencyId          VARCHAR(36)  NOT NULL DEFAULT UUID(),
     Country             VARCHAR(255) NULL,

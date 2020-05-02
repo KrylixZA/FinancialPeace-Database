@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS tb_Budget
+(
+    BudgetId VARCHAR(36) NOT NULL DEFAULT UUID(),
+    UserId   VARCHAR(36) NOT NULL,
+    PRIMARY KEY (BudgetId)
+);
