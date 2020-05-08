@@ -11,7 +11,8 @@ BEGIN
       AND UserId = $userId;
 
     UPDATE tb_SavingsAccount
-    SET CurrentSavingsValue = (@currentSavingsValue + $amount)
+    SET CurrentSavingsValue = (@currentSavingsValue + $amount),
+        UpdatedDateTime     = NOW()
     WHERE SavingsAccountId = $savingsAccountId
       AND UserId = $userId;
 END

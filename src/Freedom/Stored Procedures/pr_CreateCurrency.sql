@@ -10,7 +10,9 @@ BEGIN
     WHERE NOT EXISTS(SELECT CurrencyId
                      FROM tb_Currency
                      WHERE Country = $country
-                       AND CountryCurrencyCode = $countryCurrencyCode)
+                       AND Name = $name
+                       AND CountryCurrencyCode = $countryCurrencyCode
+                       AND RandExchangeRate = $randExchangeRate)
     LIMIT 1;
 END
 //

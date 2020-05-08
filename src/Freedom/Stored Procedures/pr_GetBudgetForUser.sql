@@ -12,7 +12,8 @@ BEGIN
              JOIN tb_Expense AS exp ON exp.BudgetId = budg.BudgetId
              JOIN tb_ExpenseCategory AS ec ON ec.ExpenseCategoryId = exp.ExpenseCategoryId
              JOIN tb_Currency AS curr ON curr.CurrencyId = exp.CurrencyId
-    WHERE budg.UserId = $userId;
+    WHERE budg.UserId = $userId
+      AND exp.IsDeleted = FALSE;
 END
 //
 

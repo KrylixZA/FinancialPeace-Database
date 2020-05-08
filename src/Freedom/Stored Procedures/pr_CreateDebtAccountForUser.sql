@@ -16,8 +16,21 @@ BEGIN
     WHERE NOT EXISTS(SELECT DebtAccountId
                      FROM tb_DebtAccount
                      WHERE UserId = $userId
+                       AND CurrencyId = @currencyId
+                       AND InitialAmountOwed = $amountOwed
+                       AND CurrentAmountOwed = $amountOwed
+                       AND TargetPayoffDate = $targetPayoffDate
                        AND Name = $name)
     LIMIT 1;
+
+    UPDATE tb_DebtAccount
+    SET IsDeleted = FALSE
+    WHERE UserId = $userId
+      AND CurrencyId = @currencyId
+      AND InitialAmountOwed = $amountOwed
+      AND CurrentAmountOwed = $amountOwed
+      AND TargetPayoffDate = $targetPayoffDate
+      AND Name = $name;
 END
 //
 

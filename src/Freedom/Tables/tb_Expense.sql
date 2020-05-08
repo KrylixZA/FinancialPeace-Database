@@ -1,10 +1,13 @@
 CREATE TABLE IF NOT EXISTS tb_Expense
 (
-    ExpenseId         VARCHAR(36)  NOT NULL DEFAULT UUID(),
-    ExpenseCategoryId VARCHAR(36)  NOT NULL,
-    CurrencyId        VARCHAR(36)  NOT NULL,
-    BudgetId          VARCHAR(36)  NOT NULL,
-    Value             DOUBLE       NOT NULL,
+    ExpenseId         VARCHAR(36) NOT NULL DEFAULT UUID(),
+    ExpenseCategoryId VARCHAR(36) NOT NULL,
+    CurrencyId        VARCHAR(36) NOT NULL,
+    BudgetId          VARCHAR(36) NOT NULL,
+    Value             DOUBLE      NOT NULL,
+    CreatedDateTime   DATETIME    NOT NULL DEFAULT NOW(),
+    UpdatedDateTime   DATETIME    NULL,
+    IsDeleted         BOOLEAN              DEFAULT FALSE,
     PRIMARY KEY (ExpenseId),
     CONSTRAINT fk_tb_Expense_ExpenseCategoryId FOREIGN KEY (ExpenseCategoryId) REFERENCES tb_ExpenseCategory (ExpenseCategoryId),
     CONSTRAINT fk_tb_Expense_CurrencyId FOREIGN KEY (CurrencyId) REFERENCES tb_Currency (CurrencyId),

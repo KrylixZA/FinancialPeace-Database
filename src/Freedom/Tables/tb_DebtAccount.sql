@@ -8,6 +8,9 @@ CREATE TABLE IF NOT EXISTS tb_DebtAccount
     TargetPayoffDate  DATE         NOT NULL,
     ActualPayoffDate  DATE         NULL,
     Name              VARCHAR(255) NOT NULL,
+    CreatedDateTime   DATETIME     NOT NULL DEFAULT NOW(),
+    UpdatedDateTime   DATETIME     NULL,
+    IsDeleted         BOOLEAN      NOT NULL DEFAULT FALSE,
     PRIMARY KEY (DebtAccountId),
     CONSTRAINT fk_tb_Debt_UserId FOREIGN KEY (UserId) REFERENCES tb_User (UserId),
     CONSTRAINT fk_tb_Debt_CurrencyId FOREIGN KEY (CurrencyId) REFERENCES tb_Currency (CurrencyId)

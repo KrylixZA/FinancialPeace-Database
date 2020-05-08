@@ -13,6 +13,11 @@ BEGIN
             WHERE ExpenseCategoryId = @expenseCategoryId
               AND UserId = $userId)
     LIMIT 1;
+
+    UPDATE tb_ExpenseCategoryUserMapping
+    SET IsDeleted = FALSE
+    WHERE ExpenseCategoryId = @expenseCategoryId
+      AND UserId = $userId;
 END
 //
 

@@ -10,7 +10,8 @@ BEGIN
            sa.Name                  AS name
     FROM tb_SavingsAccount AS sa
              JOIN tb_Currency AS curr ON curr.CurrencyId = sa.CurrencyId
-    WHERE sa.UserId = $userId;
+    WHERE sa.UserId = $userId
+      AND sa.IsDeleted = FALSE;
 END
 //
 

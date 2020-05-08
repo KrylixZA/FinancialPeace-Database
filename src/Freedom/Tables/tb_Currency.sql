@@ -5,5 +5,6 @@ CREATE TABLE IF NOT EXISTS tb_Currency
     Name                VARCHAR(255) NOT NULL,
     CountryCurrencyCode VARCHAR(10)  NOT NULL,
     RandExchangeRate    DOUBLE       NOT NULL,
+    CreatedDateTime     DATETIME     NOT NULL DEFAULT NOW(),
     PRIMARY KEY (CurrencyId)
 );

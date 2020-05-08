@@ -8,10 +8,10 @@ BEGIN
     FROM tb_Budget
     WHERE UserId = $userId;
 
-    DELETE
-    FROM tb_Expense
-    WHERE ExpenseId = $expenseId
-      AND BudgetId = @budgetId;
+    UPDATE tb_Expense
+    SET IsDeleted       = TRUE,
+        UpdatedDateTime = NOW()
+    WHERE ExpenseId = $expenseId;
 END
 //
 

@@ -30,9 +30,18 @@ BEGIN
     SELECT @expenseCategoryId, @currencyId, @budgetId, $value
     WHERE NOT EXISTS(SELECT ExpenseId
                      FROM tb_Expense
-                     WHERE BudgetId = @budgetId
-                       AND ExpenseCategoryId = @expenseCategoryId)
+                     WHERE ExpenseCategoryId = @expenseCategoryId
+                       AND CurrencyId = @currencyId
+                       AND BudgetId = @budgetId
+                       AND Value = $value)
     LIMIT 1;
+
+    UPDATE tb_Expense
+    SET IsDeleted = FALSE
+    WHERE ExpenseCategoryId = @expenseCategoryId
+      AND CurrencyId = @currencyId
+      AND BudgetId = @budgetId
+      AND Value = $value;
 END
 //
 

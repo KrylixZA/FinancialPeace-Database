@@ -16,8 +16,21 @@ BEGIN
     WHERE NOT EXISTS(SELECT SavingsAccountId
                      FROM tb_SavingsAccount
                      WHERE UserId = $userId
+                       AND CurrencyId = @currencyId
+                       AND InitialSavingsValue = $savingsValue
+                       AND CurrentSavingsValue = $savingsValue
+                       AND SavingsTarget = $savingsTarget
                        AND Name = $name)
     LIMIT 1;
+
+    UPDATE tb_SavingsAccount
+    SET IsDeleted = FALSE
+    WHERE UserId = $userId
+      AND CurrencyId = @currencyId
+      AND InitialSavingsValue = $savingsValue
+      AND CurrentSavingsValue = $savingsValue
+      AND SavingsTarget = $savingsTarget
+      AND Name = $name;
 END
 //
 

@@ -9,7 +9,8 @@ BEGIN
     WHERE CountryCurrencyCode = $countryCurrencyCode;
 
     UPDATE tb_Expense
-    SET CurrencyId = @currencyId
+    SET CurrencyId      = @currencyId,
+        UpdatedDateTime = NOW()
     WHERE ExpenseId = $expenseId;
 END
 //

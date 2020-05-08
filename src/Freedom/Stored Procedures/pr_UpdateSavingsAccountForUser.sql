@@ -30,6 +30,11 @@ BEGIN
                                                 $userId,
                                                 $name);
     END IF;
+
+    UPDATE tb_SavingsAccount
+    SET UpdatedDateTime = NOW()
+    WHERE SavingsAccountId = $savingsAccountId
+      AND UserId = $userId;
 END
 //
 

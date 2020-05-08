@@ -11,7 +11,8 @@ BEGIN
       AND UserId = $userId;
 
     UPDATE tb_DebtAccount
-    SET CurrentAmountOwed = (@currentAmountOwed + $amount)
+    SET CurrentAmountOwed = (@currentAmountOwed + $amount),
+        UpdatedDateTime   = NOW()
     WHERE DebtAccountId = $debtAccountId
       AND UserId = $userId;
 END

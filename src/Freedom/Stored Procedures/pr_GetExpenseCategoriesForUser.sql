@@ -6,7 +6,8 @@ BEGIN
            ec.ExpenseCategoryName AS expenseCategoryName
     FROM tb_ExpenseCategory AS ec
              JOIN tb_ExpenseCategoryUserMapping AS ecu ON ecu.ExpenseCategoryId = ec.ExpenseCategoryId
-    WHERE ecu.UserId = $userId;
+    WHERE ecu.UserId = $userId
+      AND IsDeleted = False;
 END
 //
 

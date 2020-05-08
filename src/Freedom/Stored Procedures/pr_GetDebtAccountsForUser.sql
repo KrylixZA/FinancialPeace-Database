@@ -11,7 +11,8 @@ BEGIN
            da.Name                  AS name
     FROM tb_DebtAccount AS da
              JOIN tb_Currency AS curr ON curr.CurrencyId = da.CurrencyId
-    WHERE da.UserId = $userId;
+    WHERE da.UserId = $userId
+      AND da.IsDeleted = FALSE;
 END
 //
 

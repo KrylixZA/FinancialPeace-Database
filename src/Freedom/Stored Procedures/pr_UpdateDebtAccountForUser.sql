@@ -37,6 +37,11 @@ BEGIN
                                              $userId,
                                              $name);
     END IF;
+
+    UPDATE tb_DebtAccount
+    SET UpdatedDateTime = NOW()
+    WHERE DebtAccountId = $debtAccountId
+      AND UserId = $userId;
 END
 //
 
