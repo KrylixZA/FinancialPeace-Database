@@ -13,3 +13,5 @@ END
 //
 
 DELIMITER ;
+
+GRANT EXECUTE ON PROCEDURE Freedom.pr_GetCurrencies TO 'FinancialPeace'@'%';

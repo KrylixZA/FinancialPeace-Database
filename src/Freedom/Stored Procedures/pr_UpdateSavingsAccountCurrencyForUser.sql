@@ -17,3 +17,5 @@ END
 //
 
 DELIMITER ;
+
+GRANT EXECUTE ON PROCEDURE Freedom.pr_UpdateSavingsAccountCurrencyForUser TO 'FinancialPeace'@'%';

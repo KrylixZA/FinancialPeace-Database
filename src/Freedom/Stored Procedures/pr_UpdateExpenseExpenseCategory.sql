@@ -15,3 +15,5 @@ END
 //
 
 DELIMITER ;
+
+GRANT EXECUTE ON PROCEDURE Freedom.pr_UpdateExpenseExpenseCategory TO 'FinancialPeace'@'%';

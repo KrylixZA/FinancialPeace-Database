@@ -12,3 +12,5 @@ END
 //
 
 DELIMITER ;
+
+GRANT EXECUTE ON PROCEDURE Freedom.pr_DeleteDebtAccountForUser TO 'FinancialPeace'@'%';

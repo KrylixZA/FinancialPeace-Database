@@ -10,3 +10,5 @@ END
 //
 
 DELIMITER ;
+
+GRANT EXECUTE ON PROCEDURE Freedom.pr_UpdateExpenseValue TO 'FinancialPeace'@'%';

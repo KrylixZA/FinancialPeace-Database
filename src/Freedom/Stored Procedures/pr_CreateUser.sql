@@ -16,3 +16,5 @@ END
 //
 
 DELIMITER ;
+
+GRANT EXECUTE ON PROCEDURE Freedom.pr_CreateUser TO 'FinancialPeace'@'%';
