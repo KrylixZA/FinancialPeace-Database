@@ -5,6 +5,8 @@ CREATE OR REPLACE PROCEDURE pr_CreateExpenseForUser(IN $userId VARCHAR(36),
                                                     IN $countryCurrencyCode VARCHAR(10),
                                                     IN $value DOUBLE)
 BEGIN
+    CALL pr_CreateExpenseCategoryForUser($userId, $expenseCategoryName);
+
     SELECT ExpenseCategoryId
     INTO @expenseCategoryId
     FROM tb_ExpenseCategory
