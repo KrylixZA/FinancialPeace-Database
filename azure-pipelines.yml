@@ -1,4 +1,4 @@
-name: $(Rev:r)
+name: $(MajorVersion).$(MinorVersion).$(PatchVersion).$(Rev:r)
 
 trigger:
   branches:
@@ -12,33 +12,43 @@ pool:
   vmImage: 'windows-2019'
 
 variables:
-  buildConfiguration: 'Release'
-  nugetFeedName: 'headleysj'
-  nugetFeedSource: 'https://pkgs.dev.azure.com/headleysj/_packaging/headleysj/nuget/v3/index.json'
-  nugetFeedUser: 'AzureNugetUser'
+  BuildConfiguration: 'Release'
 
 jobs:
 - job: 'Build'
   steps:
-  - task: PowerShell@2
-    displayName: 'Build'
-    inputs:
-      targetType: 'filePath'
-      filePath: 'build-bootstrapper.ps1'
-      arguments: '-Actions "build" -BuildId $(Build.BuildNumber) -BranchName $(Build.SourceBranchName) -BuildConfiguration $(buildConfiguration) -NugetFeedName $(nugetFeedName) -NugetFeedSource $(nugetFeedSource) -NugetFeedUser $(nugetFeedUser) -NugetAccessToken $(System.AccessToken)'
-      failOnStdErr: true
+  - checkout: self
+    fetchDepth: 1
+    clean: true
 
   - task: PowerShell@2
-    displayName: 'Publish packages to nuget feed'
+    displayName: 'Set build number'
     inputs:
-      targetType: 'filePath'
-      filePath: 'nuget-publish.ps1'
-      arguments: '-NugetFeedName $(nugetFeedName) -NugetFeedSource $(nugetFeedSource) -NugetFeedUser $(nugetFeedUser) -NugetAccessToken $(System.AccessToken)'
-      failOnStdErr: true
+      targetType: 'inline'
+      script: |
+        $branchName = "$(Build.SourceBranchName)";
+        $buildVersion = "$(Build.BuildNumber)";
+        $nugetPkgVersion = $buildVersion;
+        If (-not([string]::IsNullOrWhiteSpace($branchName)) -and ($branchName -ne "master")) {
+            $nugetPkgVersion = "$nugetPkgVersion-$branchName";
+        }
+        Write-Host "Package version: $nugetPkgVersion";
+        Write-Host "##vso[build.updateBuildNumber]$nugetPkgVersion";
 
-  - task: PowerShell@2
-    displayName: 'Update build display number'
+  - task: NuGetCommand@2
+    displayName: 'nuget pack'
     inputs:
-      targetType: 'filepath'
-      filePath: 'build-bootstrapper.ps1'
-      arguments: '-Actions "set-build-display-number" -BuildId $(Build.BuildNumber) -BranchName $(Build.SourceBranchName)'
+      command: 'pack'
+      packagesToPack: '**/*.nuspec'
+      configuration: '$(BuildConfiguration)'
+      versioningScheme: 'byEnvVar'
+      versionEnvVar: 'Build.BuildNumber'
+      buildProperties: 'version="$(Build.BuildNumber)"'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet nuget push'
+    inputs:
+      command: 'push'
+      packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+      nuGetFeedType: 'internal'
+      publishVstsFeed: '404449e0-6d24-4a4e-bc3e-4634d3f54a5a'

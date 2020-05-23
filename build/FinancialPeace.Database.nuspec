@@ -11,8 +11,8 @@
         <tags>Financial Peace Database</tags>
     </metadata>
     <files>
-        <file src=".\src\Freedom\**\*.sql" target="Freedom" />
-        <file src=".\build\*.ps1" />
-        <file src=".\build\*.dll" />
+        <file src="..\src\Freedom\**\*.sql" target="Freedom" />
+        <file src="..\build\*.ps1" />
+        <file src="..\build\*.dll" />
     </files>
 </package>
