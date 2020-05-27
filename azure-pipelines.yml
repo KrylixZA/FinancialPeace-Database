@@ -35,6 +35,16 @@ jobs:
         Write-Host "Package version: $nugetPkgVersion";
         Write-Host "##vso[build.updateBuildNumber]$nugetPkgVersion";
 
+  - task: SonarCloudPrepare@1
+    displayName: 'Prepare for analysis'
+    inputs:
+      SonarCloud: 'SonarCloud'
+      organization: 'headleysj'
+      scannerMode: 'CLI'
+      configMode: 'manual'
+      cliProjectKey: 'FinancialPeace-Database'
+      cliSources: 'src'
+
   - task: NuGetCommand@2
     displayName: 'nuget pack'
     inputs:
@@ -52,3 +62,11 @@ jobs:
       packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
       nuGetFeedType: 'internal'
       publishVstsFeed: '404449e0-6d24-4a4e-bc3e-4634d3f54a5a'
+
+  - task: SonarCloudAnalyze@1
+    displayName: 'SonarCloud analysis'
+
+  - task: SonarCloudPublish@1
+    displayName: 'SonarCloud publish'
+    inputs:
+      pollingTimeoutSec: '300'
