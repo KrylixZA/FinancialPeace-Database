@@ -1,5 +1,3 @@
-name: $(MajorVersion).$(MinorVersion).$(PatchVersion).$(Rev:r)
-
 trigger:
   branches:
     include:
@@ -13,6 +11,11 @@ pool:
 
 variables:
   BuildConfiguration: 'Release'
+  MajorVersion: 1
+  MinorVersion: 2
+  PatchVersion: 1
+
+name: $(MajorVersion).$(MinorVersion).$(PatchVersion).$(Rev:r)
 
 jobs:
 - job: 'Build'
@@ -29,11 +32,14 @@ jobs:
         $branchName = "$(Build.SourceBranchName)";
         $buildVersion = "$(Build.BuildNumber)";
         $nugetPkgVersion = $buildVersion;
-        If (-not([string]::IsNullOrWhiteSpace($branchName)) -and ($branchName -ne "master")) {
+        if (-not([string]::IsNullOrWhiteSpace($branchName)) -and 
+            ($branchName -ne "master") -and 
+            -not($buildVersion -match $branchName)) {
+              
             $nugetPkgVersion = "$nugetPkgVersion-$branchName";
+            Write-Host "##vso[build.updateBuildNumber]$nugetPkgVersion";
         }
         Write-Host "Package version: $nugetPkgVersion";
-        Write-Host "##vso[build.updateBuildNumber]$nugetPkgVersion";
 
   - task: SonarCloudPrepare@1
     displayName: 'Prepare for analysis'
@@ -46,7 +52,7 @@ jobs:
       cliSources: 'src'
 
   - task: NuGetCommand@2
-    displayName: 'nuget pack'
+    displayName: 'Package contents'
     inputs:
       command: 'pack'
       packagesToPack: '**/*.nuspec'
@@ -56,7 +62,7 @@ jobs:
       buildProperties: 'version="$(Build.BuildNumber)"'
 
   - task: DotNetCoreCLI@2
-    displayName: 'dotnet nuget push'
+    displayName: 'Publish packages'
     inputs:
       command: 'push'
       packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
