@@ -11,7 +11,7 @@ $workingDir = $PSScriptRoot;
 .\create-tables.ps1 -AdminUser $AdminUser -AdminPassword $AdminPassword -MySqlHost $MySqlHost -WorkingDir $workingDir;
 
 # Run table presets
-.\create-table-presets.ps1 -AdminUser $AdminUser -AdminPass $AdminPassword -MySqlHost $MySqlHost -WorkingDir $workingDir;
+# .\create-table-presets.ps1 -AdminUser $AdminUser -AdminPass $AdminPassword -MySqlHost $MySqlHost -WorkingDir $workingDir;
 
 # Create stored procedures
-.\create-stored-procedures.ps1 -AdminUser $AdminUser -AdminPass $AdminPassword -MySqlHost $MySqlHost -WorkingDir $workingDir;
+# .\create-stored-procedures.ps1 -AdminUser $AdminUser -AdminPass $AdminPassword -MySqlHost $MySqlHost -WorkingDir $workingDir;

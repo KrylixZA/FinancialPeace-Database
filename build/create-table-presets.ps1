@@ -1,3 +1,5 @@
+Import-Module .\mysql-helper.ps1
+
 param (
     $AdminUser = "sa",
     $AdminPassword = "1qaz2wsx",
@@ -17,25 +19,9 @@ Add-Type -Path "$(Split-Path -Parent $MyInvocation.MyCommand.Path)\MySQL.Data.dl
 Add-Type -Path "$(Split-Path -Parent $MyInvocation.MyCommand.Path)\Renci.SshNet.dll";
 
 # Get and execute table create scripts
-$tableScripts = (Get-ChildItem -Path $presetsDir -Include ("*.PRESETS.sql") -Recurse).FullName;
-Write-Host $tableScripts;
-foreach ($tableScript in $tableScripts) {
-    $command = New-Object MySql.Data.MySqlClient.MySqlCommand;
-    $conn = New-Object MySql.Data.MySqlClient.MySqlConnection($connectionString);
-
-    $sql = [io.file]::ReadAllText($tableScript);
-    $command.CommandText = $sql;
-    $command.Connection = $conn;
-    $command.Connection.Open();
-    try {
-        Write-Host "Executing query $sql";
-        $command.executeNonQuery();
-    }
-    catch {
-        Write-Error ("Error occured while ExecuteNonQuery");
-    }
-    finally {
-        $connection.Close();
-        Write-Host "Closing Connection";
-    }
+$sqlScripts = @();
+$sqlScripts = (Get-ChildItem -Path $presetsDir -Include ("*.PRESETS.sql") -Recurse).FullName;
+Write-Host $sqlScripts;
+foreach ($sqlScript in $sqlScripts) {
+    Execute-SqlScript -ConnectionString $connectionString -SqlScriptPath $sqlScript;
 }

@@ -12,29 +12,21 @@ $tablesDir = Join-Path $freedomDir "Tables";
 
 # Create SQL connection string
 $connectionString = "server=$MySqlHost;port=3306;uid=$AdminUser;pwd=$AdminPassword;database=$MySqlDb";
-Add-Type -Path "$(Split-Path -Parent $MyInvocation.MyCommand.Path)\MySQL.Data.dll";
-Add-Type -Path "$(Split-Path -Parent $MyInvocation.MyCommand.Path)\Renci.SshNet.dll";
+Add-Type -Path "$WorkingDir\MySql.Data.dll";
+Add-Type -Path "$WorkingDir\Renci.SshNet.dll";
 
-# Get and execute table create scripts
-$tableScripts = (Get-ChildItem -Path $tablesDir -Include ("*.sql") -Exclude ("*.PRESETS.sql") -Recurse).FullName;
-Write-Host $tableScripts;
-foreach ($tableScript in $tableScripts) {
-    $command = New-Object MySql.Data.MySqlClient.MySqlCommand;
-    $conn = New-Object MySql.Data.MySqlClient.MySqlConnection($connectionString);
-
-    $sql = [io.file]::ReadAllText($tableScript);
-    $command.CommandText = $sql;
-    $command.Connection = $conn;
-    $command.Connection.Open();
-    try {
-        Write-Host "Executing query $sql";
-        $command.executeNonQuery();
-    }
-    catch {
-        Write-Error ("Error occured while ExecuteNonQuery");
-    }
-    finally {
-        $connection.Close();
-        Write-Host "Closing Connection";
-    }
+# Execute the scripts
+$sqlScripts = @();
+$sqlScripts +=  Join-Path $tablesDir "tb_Budget.sql"
+# $sqlScripts +=  Join-Path $tablesDir "tb_Currency.sql"
+# $sqlScripts +=  Join-Path $tablesDir "tb_ExpenseCategory.sql"
+# $sqlScripts +=  Join-Path $tablesDir "tb_SavingsAccount.sql"
+# $sqlScripts +=  Join-Path $tablesDir "tb_User.sql"
+# $sqlScripts +=  Join-Path $tablesDir "tb_DebtAccount.sql"
+# $sqlScripts +=  Join-Path $tablesDir "tb_Expense.sql"
+# $sqlScripts +=  Join-Path $tablesDir "tb_ExpenseCategoryUserMapping.sql"
+Write-Host $sqlScripts;
+Import-Module .\mysql-helper.ps1
+foreach ($sqlScript in $sqlScripts) {
+    Execute-SqlScript -ConnectionString $connectionString -SqlScriptPath $sqlScript;
 }
