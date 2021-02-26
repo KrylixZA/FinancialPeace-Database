@@ -40,7 +40,7 @@ jobs:
     - name: Build & push Docker image
       working-directory: .
       run: |
-        docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }};
-        docker build -t krylixza/financialpeace-database:${{ steps.define_build_number.outputs.BUILD_NUMBER }} -m 2GB .;
-        docker push krylixza/financialpeace-database:${{ steps.define_build_number.outputs.BUILD_NUMBER }};
-        docker logout;
+        docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+        docker build -t krylixza/financialpeace-database:${{ steps.define_build_number.outputs.BUILD_NUMBER }} . --build-arg ${{ secrets.MYSQL_ROOT_PASSWORD }}
+        docker push krylixza/financialpeace-database:${{ steps.define_build_number.outputs.BUILD_NUMBER }}
+        docker logout
