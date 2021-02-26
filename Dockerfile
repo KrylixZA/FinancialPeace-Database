@@ -1,0 +1,13 @@
+FROM mariadb:latest
+ARG ROOT_PASSWORD
+
+ENV MYSQL_DATABASE Freedom
+ENV MYSQL_ROOT_PASSWORD=${ROOT_PASSWORD}
+
+WORKDIR /src
+COPY /src .
+WORKDIR /
+
+WORKDIR /docker-entrypoint-initdb.d
+COPY initdb.sh .
+WORKDIR /
