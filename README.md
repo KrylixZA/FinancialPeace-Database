@@ -4,7 +4,7 @@ The Financial Peace Database contains all the tables and stored procedures neces
 # Run
 Running the database is fairly straight forward in Docker:
 
-`docker run --name -d -p 3306:3306 -t krylixza/financialpeace-database:latest`
+`docker run --name=financialpeace-database -d -p 3306:3306 -t krylixza/financialpeace-database:latest`
 
 # Contribute
 To contribute to this project, please following the [contributing guide](CONTRIBUTING.md)
