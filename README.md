@@ -1,5 +1,5 @@
 # [Financial Peace Database](https://github.com/KrylixZA/FinancialPeace-Database) [![CI](https://github.com/KrylixZA/FinancialPeace-Database/actions/workflows/ci.yml/badge.svg)](https://github.com/KrylixZA/FinancialPeace-Database/actions/workflows/ci.yml)
-The Financial Peace Database contains all the tables and stored procedures necessary to serve the Financial Peace Web API.
+The Financial Peace Database contains all the tables and stored procedures necessary to serve the [Financial Peace Web API](https://github.com/KrylixZA/FinancialPeace-Web-Api).
 
 # Run
 Running the database is fairly straight forward in Docker:
