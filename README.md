@@ -1,4 +1,4 @@
-# Financial Peace Database [![CI](https://github.com/KrylixZA/FinancialPeace-Database/actions/workflows/ci.yml/badge.svg)](https://github.com/KrylixZA/FinancialPeace-Database/actions/workflows/ci.yml)
+# [Financial Peace Database](https://github.com/KrylixZA/FinancialPeace-Database) [![CI](https://github.com/KrylixZA/FinancialPeace-Database/actions/workflows/ci.yml/badge.svg)](https://github.com/KrylixZA/FinancialPeace-Database/actions/workflows/ci.yml)
 The Financial Peace Database contains all the tables and stored procedures necessary to serve the Financial Peace Web API.
 
 # Run
